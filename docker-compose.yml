@@ -1,0 +1,22 @@
+
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "${APP_PORT}:3000"
+    environment:
+      MONGO_URI: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/whatsappDB
+      POWER_AUTOMATE_URL: ${POWER_AUTOMATE_URL}
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
